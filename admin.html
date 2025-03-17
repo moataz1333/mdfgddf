@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة التحكم</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <div class="sidebar">
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">إضافة نتيجة</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">عرض النتائج</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="container-fluid">
+                    <h2>إضافة نتيجة جديدة</h2>
+                    <form id="addResultForm">
+                        <input type="text" id="studentName" placeholder="اسم الطالب">
+                        <input type="text" id="studentScore" placeholder="النتيجة">
+                        <button type="submit">إضافة</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('addResultForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const studentName = document.getElementById('studentName').value;
+            const studentScore = document.getElementById('studentScore').value;
+            fetch('/api/results', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: studentName, score: studentScore })
+            }).then(response => response.json())
+              .then(data => alert('تمت إضافة النتيجة بنجاح'));
+        });
+    </script>
+</body>
+</html>
